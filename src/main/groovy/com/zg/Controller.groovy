@@ -10,10 +10,12 @@ class Controller {
 	private void abrir() {
 
 		switch (portao.posicao) {
-			case 0..3: portao.estado = Estado.ABRINDO
+			case 0..3:
+				portao.estado = Estado.ABRINDO
 				portao.posicao++
 				break
-			case 4..5: portao.estado = Estado.ABERTO
+			case 4..5:
+				portao.estado = Estado.ABERTO
 				portao.posicao = 5
 				break
 			default: break
@@ -27,10 +29,12 @@ class Controller {
 		switch (portao.posicao) {
 		// Não ficou claro o significado de cada valor deste inteiro posição,
 		// Acredito que fique melhor substiuir o int por algo mais semântico
-			case 5..2: portao.estado = Estado.FECHANDO
+			case 5..2:
+				portao.estado = Estado.FECHANDO
 				portao.posicao--
 				break
-			case 1..0: portao.estado = Estado.FECHADO
+			case 1..0:
+				portao.estado = Estado.FECHADO
 				portao.posicao = 0
 				break
 			default: break
@@ -44,11 +48,14 @@ class Controller {
 		contexto.each {
 
 			switch (it) {
-				case 'P': moverPortao()
+				case 'P':
+					moverPortao()
 					break
-				case 'O': alternarSentido()
+				case 'O':
+					alternarSentido()
 					break
-				case '.': manterEstado()
+				case '.':
+					manterEstado()
 					break
 				default: break
 			}
@@ -65,7 +72,6 @@ class Controller {
 
 	private void moverPortao() {
 
-		//Tente formatar melhor seu código, o IntelliJ tem uma atalho que faz isso automaticamente
 
 		if (portao.estado == Estado.FECHADO || portao.estado == Estado.PAUSADO_ABRINDO) {
 			abrir()
@@ -92,15 +98,20 @@ class Controller {
 	}
 
 	private void manterEstado() {
+
 		switch (portao.estado) {
-			case Estado.ABERTO: // swith case fica mais legível quebrando linha
+
+			case Estado.ABERTO:
 				portao.posicao = 5
 				break
-			case Estado.FECHADO: portao.posicao = 0
+			case Estado.FECHADO:
+				portao.posicao = 0
 				break
-			case Estado.ABRINDO: abrir()
+			case Estado.ABRINDO:
+				abrir()
 				break
-			case Estado.FECHANDO: fechar()
+			case Estado.FECHANDO:
+				fechar()
 		}
 	}
 
