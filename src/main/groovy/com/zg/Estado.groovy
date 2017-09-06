@@ -1,0 +1,10 @@
+package com.zg
+
+enum Estado {
+	ABERTO,
+	FECHADO,
+	ABRINDO,
+	FECHANDO,
+	PAUSADO_ABRINDO,
+	PAUSADO_FECHANDO;
+}
