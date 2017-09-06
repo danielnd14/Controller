@@ -24,7 +24,8 @@ class Controller {
 	private void fechar(){
 
 		switch (portao.posicao){
-
+			// Não ficou claro o significado de cada valor deste inteiro posição, 
+			// Acredito que fique melhor substiuir o int por algo mais semântico
 			case 5..2:portao.estado = Estado.FECHANDO
 				portao.posicao--
 				break
@@ -37,7 +38,8 @@ class Controller {
 
 	 String processar (String contexto){
 
-		String saida = ""
+		String saida = "" //Use StringBuilder
+		 // usar .each no lugar do for
 		for(char c in contexto){
 
 			switch (c){
@@ -59,6 +61,7 @@ class Controller {
 	}
 	private void moverPortao(){
 
+		//Tente formatar melhor seu código, o IntelliJ tem uma atalho que faz isso automaticamente
 
 		if(portao.estado == Estado.FECHADO  ||  portao.estado == Estado.PAUSADO_ABRINDO){
 			abrir()
@@ -83,7 +86,8 @@ class Controller {
 	}
 	private void manterEstado(){
 		switch(portao.estado){
-			case Estado.ABERTO: portao.posicao = 5
+			case Estado.ABERTO: // swith case fica mais legível quebrando linha
+				portao.posicao = 5
 				break
 			case Estado.FECHADO: portao.posicao = 0
 				break
