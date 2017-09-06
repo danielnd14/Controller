@@ -6,86 +6,93 @@ class Controller {
 	Controller() {
 		this.portao = new Portao()
 	}
-	private void abrir(){
 
-		switch (portao.posicao){
-			case 0..3:portao.estado = Estado.ABRINDO
+	private void abrir() {
+
+		switch (portao.posicao) {
+			case 0..3: portao.estado = Estado.ABRINDO
 				portao.posicao++
 				break
-			case 4..5:portao.estado = Estado.ABERTO
+			case 4..5: portao.estado = Estado.ABERTO
 				portao.posicao = 5
 				break
-			default:break
+			default: break
 		}
 
 
 	}
 
-	private void fechar(){
+	private void fechar() {
 
-		switch (portao.posicao){
-			// Não ficou claro o significado de cada valor deste inteiro posição, 
-			// Acredito que fique melhor substiuir o int por algo mais semântico
-			case 5..2:portao.estado = Estado.FECHANDO
+		switch (portao.posicao) {
+		// Não ficou claro o significado de cada valor deste inteiro posição,
+		// Acredito que fique melhor substiuir o int por algo mais semântico
+			case 5..2: portao.estado = Estado.FECHANDO
 				portao.posicao--
 				break
-			case 1..0:portao.estado = Estado.FECHADO
+			case 1..0: portao.estado = Estado.FECHADO
 				portao.posicao = 0
 				break
-			default:break
+			default: break
 		}
 	}
 
-	 String processar (String contexto){
+	String processar(String contexto) {
 
-		String saida = "" //Use StringBuilder
-		 // usar .each no lugar do for
-		for(char c in contexto){
+		StringBuilder saida = new StringBuilder()
 
-			switch (c){
-				case 'P':moverPortao()
+		contexto.each {
+
+			switch (it) {
+				case 'P': moverPortao()
 					break
-				case 'O':alternarSentido()
+				case 'O': alternarSentido()
 					break
-				case '.':manterEstado()
+				case '.': manterEstado()
 					break
-				default:break
+				default: break
 			}
-			saida +=portao.posicao
+
+			saida.append(portao.posicao)
 
 		}
+
 
 		reset()
 
 		return saida
 	}
-	private void moverPortao(){
+
+	private void moverPortao() {
 
 		//Tente formatar melhor seu código, o IntelliJ tem uma atalho que faz isso automaticamente
 
-		if(portao.estado == Estado.FECHADO  ||  portao.estado == Estado.PAUSADO_ABRINDO){
+		if (portao.estado == Estado.FECHADO || portao.estado == Estado.PAUSADO_ABRINDO) {
 			abrir()
-		}else if (portao.estado == Estado.ABERTO || portao.estado == Estado.PAUSADO_FECHANDO){
+		} else if (portao.estado == Estado.ABERTO || portao.estado == Estado.PAUSADO_FECHANDO) {
 			fechar()
-		}else if (portao.estado == Estado.ABRINDO || portao.estado == Estado.FECHANDO){
+		} else if (portao.estado == Estado.ABRINDO || portao.estado == Estado.FECHANDO) {
 			pausar()
 		}
 
 	}
-	private void alternarSentido(){
-		if(portao.estado == Estado.ABRINDO){
+
+	private void alternarSentido() {
+		if (portao.estado == Estado.ABRINDO) {
 			fechar()
-		}else if (portao.estado == Estado.FECHANDO){
+		} else if (portao.estado == Estado.FECHANDO) {
 			abrir()
 		}
 	}
-	private void reset(){
+
+	private void reset() {
 		portao.estado = Estado.FECHADO
 		portao.posicao = 0
 
 	}
-	private void manterEstado(){
-		switch(portao.estado){
+
+	private void manterEstado() {
+		switch (portao.estado) {
 			case Estado.ABERTO: // swith case fica mais legível quebrando linha
 				portao.posicao = 5
 				break
@@ -96,13 +103,14 @@ class Controller {
 			case Estado.FECHANDO: fechar()
 		}
 	}
-	private void pausar(){
-		switch (portao.estado){
-			case Estado.ABRINDO : portao.estado = Estado.PAUSADO_ABRINDO
+
+	private void pausar() {
+		switch (portao.estado) {
+			case Estado.ABRINDO: portao.estado = Estado.PAUSADO_ABRINDO
 				break
-			case Estado.FECHANDO : portao.estado = Estado.PAUSADO_FECHANDO
+			case Estado.FECHANDO: portao.estado = Estado.PAUSADO_FECHANDO
 				break
-			default : break
+			default: break
 		}
 	}
 }
